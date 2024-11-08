@@ -1,0 +1,40 @@
+{%  load static %}
+</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Safe Display of User Content</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}</h1>
+
+    <!-- Automatically escaped user input -->
+    <p>User Bio: {{ user.bio }}</p> <!-- Escaped by default -->
+
+    <!-- Using safe filter - caution required! -->
+    <p>Bio with HTML: {{ user.bio_html|safe }}</p> <!-- Only use if bio_html is sanitized -->
+
+    <!-- Displaying comments from users -->
+    <h2>User Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }}</li> <!-- Automatically escaped, safe to use -->
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+<form method="POST" action="" class="form auth__form">
+    {% csrf_token %}
+    <!-- Input:Email -->
+    <div class="form__field">
+        <label for="formInput#text">Username: </label>
+        <input
+                class="input input--text"
+                id="formInput#text"
+                type="text"
+                name="username"
+                placeholder="Enter your username..."
+        />
+    </div>
